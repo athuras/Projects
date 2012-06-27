@@ -1,0 +1,10 @@
+Slave: 
+  -unique address
+  -contains list of n-cells
+
+Cell:
+  -index (id) value
+  -status:
+    -return 'status' object
+
+
