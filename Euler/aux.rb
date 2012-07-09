@@ -2,13 +2,10 @@ module Aux
   include Math
   PHI = (1 + 5**0.5)/2
 
-  class Array
-    def sum
-      sum = 0
-      self.each do |e|; sum += e; end;
-      return sum
-    end
+  # just so i remember, blocks ftw
+  def sum( *splat ) return args.inject { |a,b| a += b } end
 
+  class Array
     def containsFactor(x)
       state = false
       self.each do |e|
