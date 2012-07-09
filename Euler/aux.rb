@@ -1,6 +1,6 @@
 module Aux
   include Math
-  PHI = (1 + 5**0.5)/2
+  PHI = (1 + sqrt(5))/2
 
   # just so i remember, blocks ftw
   def sum( *splat ) return args.inject { |a,b| a += b } end

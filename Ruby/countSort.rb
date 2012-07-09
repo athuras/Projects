@@ -16,7 +16,7 @@ class Array
     return out
   end
 
-  def cSort2 # now with better memory management, a.k.a non-pointer C++ stuff
+  def cSort2 # now with better memory management
     aux = Array.new(self.max + 1){ |i| 0 }
     self.each do |e|
       aux[e] += 1
