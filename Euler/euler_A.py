@@ -14,14 +14,20 @@ def ireduce(f, iterable, init=None):
         yield curr
 
 
-def gen_fib(n):
+def gen_fib(n, a0=1, a1=2):
     a0, a1 = 1, 2
-    for i in itertools.count():
-        if not 0 <= i < n:
-            return
+    z = 0
+    if n > 1:
+        yield 1
+    if n > 2:
+        yield 2
+    while True:
         z = a0 + a1
         a0, a1 = a1, z
-        yield z
+        if z < n:
+            yield z
+        else:
+            return
 
 
 def euler1(N, factors):  # First Attempt, O(N)
@@ -60,3 +66,15 @@ def euler1b(N, factors):  # Informed Generalisation, O(1/2*factors^2)
         result -= sumDivBy(f)
 
     return result
+
+# This can be made slightly more efficient if the goal is to always have the
+# base as even, however for the sake of allowing any base to be used the
+# mod-test is kept, and we don't skip any fibonacci numbers.
+def euler2(N, base):  # First attempt
+    s = 0
+    for term in gen_fib(N):
+        if term % base == 0:
+            s += term
+        else:
+            continue
+    return s
