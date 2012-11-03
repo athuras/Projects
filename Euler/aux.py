@@ -23,7 +23,7 @@ def gen_Multiples(n,factors):
 				break
 
 
-def gen_Primes(n):
+def gen_Primes(n=1000000):
     '''Prime Number Generator using sieve of Eratosthenes'''
     D = {}
     yield 2
