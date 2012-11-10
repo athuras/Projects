@@ -2,6 +2,25 @@ import itertools
 from math import log10, log, floor
 from numpy.random import random_integers
 # Utility methods for use with project euler.
+# Checkers:
+def fermat_sum_of_squares(n):
+    '''True if n can be expressed as a^2 + b^2'''
+    pmap = {}
+    for p in gen_PrimeFactors(n):
+        pmap.update(p)
+    pmap = {}
+    for p in gen_PrimeFactors(n):
+        pmap.update(p)
+    for p in pmap:
+        # we only care if p = 4k + 3
+        if p < 7:
+            continue
+        if not (((p - 3) / 4.0).is_integer()):
+            continue
+        elif pmap[p] % 2 != 0:
+            return False
+    return True
+
 
 # Generators
 def pairwiseCmp(fct):
@@ -23,7 +42,7 @@ def gen_Multiples(n,factors):
 				break
 
 
-def gen_Primes(n=1000000):
+def gen_Primes():
     '''Prime Number Generator using sieve of Eratosthenes'''
     D = {}
     yield 2
