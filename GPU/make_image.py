@@ -13,4 +13,8 @@ ax = fig.add_subplot(111)
 ax.imshow(mset.reshape(res), cmap='jet', aspect='equal')
 fig.savefig("mandelbrot_pycuda.png", dpi=DPI)
 
+interesting_parameters = [
+        {'center' = -.743030-.126433j,
+         'mag' = 190.99}]
+
 print 'fin'

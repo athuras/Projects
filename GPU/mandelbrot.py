@@ -45,3 +45,28 @@ def generate_set(x_min, x_max, y_min, y_max, resolution=(1000., 1000.), maxiter=
     q = np.ravel(xx + yy[:, None]).astype(np.complex64)
     z = np.zeros_like(q)
     return calculate_z_gpu(q, maxiter, z)
+
+
+def generate_set2(center=0+0j, magnification=1., xy_aspect=1, x_res=1000, maxiter=256):
+    '''Generates a mandelbrot rendering (1:1 Re:Im) (2-d numpy array)
+    * center:  the complex number about which the image is centered
+    * magnification: how 'zoomed in' we are (currently to float32 precision),
+        a rendering centered at 0+0j with magnification=1 will return the unit-
+        box image with upper-left corner at -0.5+0.5j
+    * xy_aspect: governs the shape of the resulting array, 2:1r -> 2, 1:2 -> 0.5
+    * x_res: how many pixels/elements shoudl be rendered across the image,
+        the y_res = xy_aspect * x_res. For the love of all that is holy,
+        pick an even number!
+    * maxiter: maximum number of iterations to attempt to discern if the
+        complex number Z escapes the mandelbrot set.
+    '''
+    xx = np.linspace(center.real - xy_aspect / (2. * magnification),
+                     center.real + xy_aspect / (2. * magnification), x_res)
+    yy = np.linspace(center.imag + (1. / xy_aspect) / (2. * magnification),
+                     center.imag - (1. / xy_aspect) / (2. * magnification),
+                     xy_aspect * x_res) * 1j
+    yy = yy.astype(np.complex64)
+    q = np.ravel(xx + yy[:, None]).astype(np.complex64)
+    z = np.zeros_like(q)
+    mset = calculate_z_gpu(q, maxiter, z).reshape((x_res, xy_aspect * x_res))
+    return mset
