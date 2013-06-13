@@ -60,13 +60,13 @@ def generate_set2(center=0+0j, magnification=1., xy_aspect=1, x_res=1000, maxite
     * maxiter: maximum number of iterations to attempt to discern if the
         complex number Z escapes the mandelbrot set.
     '''
-    xx = np.linspace(center.real - xy_aspect / (2. * magnification),
-                     center.real + xy_aspect / (2. * magnification), x_res)
-    yy = np.linspace(center.imag + (1. / xy_aspect) / (2. * magnification),
-                     center.imag - (1. / xy_aspect) / (2. * magnification),
-                     xy_aspect * x_res) * 1j
+    xx = np.linspace(center.real - xy_aspect / magnification,
+                     center.real + xy_aspect / magnification, x_res)
+    yy = np.linspace(center.imag + 1. / magnification,
+                     center.imag - 1. / magnification,
+                     x_res / float(xy_aspect)) * 1j
     yy = yy.astype(np.complex64)
     q = np.ravel(xx + yy[:, None]).astype(np.complex64)
     z = np.zeros_like(q)
-    mset = calculate_z_gpu(q, maxiter, z).reshape((x_res, xy_aspect * x_res))
+    mset = calculate_z_gpu(q, maxiter, z).reshape((x_res / float(xy_aspect), x_res))
     return mset
